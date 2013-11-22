@@ -8,6 +8,10 @@
 </head>
 <body>
 
+  
+<%= link_to "Sign in with Google", user_omniauth_authorize_path(:google_oauth2) if !user_signed_in? %>
+<%= link_to "Sign out", '' if user_signed_in? %>
+
 <%= yield %>
 
 </body>
