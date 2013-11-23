@@ -1,5 +1,8 @@
 <h1>Listing tasks</h1>
 
+<div id='calendar'></div>
+
+
 <table>
   <thead>
     <tr>
@@ -37,3 +40,13 @@
 <br>
 
 <%= link_to 'New Task', new_task_path %>
+
+<% content_for :javascript_ready do %>
+  <%= javascript_include_tag 'fullcalendar/calendar' %>
+  <%= javascript_include_tag 'fullcalendar/fullcalendar' %>
+  <%= javascript_include_tag 'fullcalendar/gcal' %>
+<% end %>
+
+<% content_for :stylesheet_ready do %>
+  <%= stylesheet_link_tag :fullcalendar %>
+<% end %>
