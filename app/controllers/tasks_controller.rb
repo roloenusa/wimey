@@ -1,4 +1,6 @@
 class TasksController < ApplicationController
+  autocomplete :user, :email #, :scopes => [:scope1, :scope2]
+  
   before_filter :authenticate_user!
   before_action :set_task, only: [:show, :edit, :update, :destroy]
   skip_before_filter :verify_authenticity_token, :only => [:update]
@@ -91,6 +93,6 @@ class TasksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def task_params
-      params.require(:task).permit(:created_by, :user_id, :title, :description, :start_date, :end_date, :status)
+      params.require(:task).permit(:created_by, :user_email, :title, :description, :start_date, :end_date, :status)
     end
 end

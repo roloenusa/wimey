@@ -15,6 +15,13 @@ class Task < ActiveRecord::Base
     :completed  => 2
   }
   
+  before_save :set_user_by_email
+  
+  def set_user_by_email
+    self.user_id = User.find_by_email(self.user_email).id
+    self.user_email = self.user_email
+  end
+  
   def as_json(options = {})
     {
       :id => self.id,

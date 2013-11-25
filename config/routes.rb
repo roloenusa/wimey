@@ -1,6 +1,4 @@
 Wimey::Application.routes.draw do
-  resources :tasks
-
   devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
   
   # The priority is based upon order of creation: first created -> highest priority.
@@ -9,16 +7,16 @@ Wimey::Application.routes.draw do
   # You can have the root of your site routed with "root"
   root "users#index"
   
+  resources :tasks do
+    get :autocomplete_user_email, :on => :collection
+  end
+  
   resources :users do 
     member do
       get 'profile'
     end
     
     resources :tasks do
-      member do
-        post 'jupdate'
-      end
-      
       collection do
         get 'calendar'
       end
