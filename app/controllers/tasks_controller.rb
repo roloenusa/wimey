@@ -1,11 +1,15 @@
 class TasksController < ApplicationController
+  before_filter :authenticate_user!
   before_action :set_task, only: [:show, :edit, :update, :destroy]
+  skip_before_filter :verify_authenticity_token, :only => [:update]
 
   # GET /tasks
   # GET /tasks.json
   def index
-    @tasks = Task.all
     
+    @user  = get_user(params[:user_id].to_i)
+    @tasks = @user.tasks
+
     respond_to do |format|
       format.html # index.html.erb
       format.js  { render :json => @tasks.to_json }
@@ -29,7 +33,7 @@ class TasksController < ApplicationController
   # POST /tasks
   # POST /tasks.json
   def create
-    @task = Task.new(task_params)
+    @task = Task.new(task_params.merge(created_by: current_user.id ))
 
     respond_to do |format|
       if @task.save
@@ -63,6 +67,19 @@ class TasksController < ApplicationController
     respond_to do |format|
       format.html { redirect_to tasks_url }
       format.json { head :no_content }
+    end
+  end
+  
+  # GET /tasks
+  # GET /tasks.json
+  def calendar
+    
+    @user  = params[:user_id].to_i == current_user.id ? current_user : User.find_by_id(params[:user_id].to_i)
+    @tasks = @user.tasks.active
+
+    respond_to do |format|
+      format.html # index.html.erb
+      format.js  { render :json => @tasks.to_json }
     end
   end
 

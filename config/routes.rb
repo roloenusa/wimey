@@ -13,6 +13,16 @@ Wimey::Application.routes.draw do
     member do
       get 'profile'
     end
+    
+    resources :tasks do
+      member do
+        post 'jupdate'
+      end
+      
+      collection do
+        get 'calendar'
+      end
+    end
   end
 
   # Example of regular route:

@@ -4,6 +4,7 @@ $(document).ready(function() {
 	var d = date.getDate();
 	var m = date.getMonth();
 	var y = date.getFullYear();
+	var url = $("#calendar").attr('class')
 	
 	$('#calendar').fullCalendar({
 		editable: true,        
@@ -26,10 +27,8 @@ $(document).ready(function() {
         
         // a future calendar might have many sources.        
         eventSources: [{
-            url: '/tasks',
-            color: 'blue',
+            url: url,
             textColor: 'white',
-            backgroundColor: 'blue',
             ignoreTimezone: false
         }],
         
@@ -54,14 +53,39 @@ $(document).ready(function() {
 });
 
 function updateEvent(the_event) {
-    $.update(
-      "/tasks/" + the_event.id,
-      { event: { title: the_event.title,
-                 starts_at: "" + the_event.start,
-                 ends_at: "" + the_event.end,
-                 description: the_event.description
-               }
-      },
-      function (reponse) { alert('successfully updated task.'); }
-    );
+    // $.update(
+    //   "/tasks/" + the_event.id,
+    //   { event: { title: the_event.title,
+    //              starts_at: "" + the_event.start,
+    //              ends_at: "" + the_event.end,
+    //              description: the_event.description
+    //            }
+    //   },
+    //   function (reponse) { alert('successfully updated task.'); }
+    // );
+	// jQuery.post('/tasks/', { 
+	// 	beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+	// 	id: event.id, 
+	// 	start: event.start, 
+	// 	end: event.end}
+	// );
+	var target_url = $("#calendar").attr('class')
+	var params = {
+		id: the_event.id,
+		user_id: the_event.user_id,
+		created_by: the_event.created_by,
+		title: the_event.title,
+		description: the_event.description,
+		status: the_event.status,
+		start_date: the_event.start,
+		end_date: the_event.end
+	};
+	$.ajax({ url: '/tasks/' + the_event.id,
+	  type: 'PUT',
+	  beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+	  data: {task: params},
+	  success: function(response) {
+	    $('#someDiv').html(response);
+	  }
+	});
 };

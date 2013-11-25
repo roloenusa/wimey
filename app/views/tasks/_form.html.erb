@@ -10,11 +10,7 @@
       </ul>
     </div>
   <% end %>
-
-  <div class="field">
-    <%= f.label :created_by %><br>
-    <%= f.number_field :created_by %>
-  </div>
+  
   <div class="field">
     <%= f.label :user_id %><br>
     <%= f.number_field :user_id %>
@@ -25,21 +21,35 @@
   </div>
   <div class="field">
     <%= f.label :description %><br>
-    <%= f.text_field :description %>
+    <%= f.text_area :description %>
   </div>
   <div class="field">
     <%= f.label :start_date %><br>
-    <%= f.datetime_select :start_date %>
+    <%= f.text_field :start_date, :class => "datetimepicker" %>
   </div>
   <div class="field">
     <%= f.label :end_date %><br>
-    <%= f.datetime_select :end_date %>
+    <%= f.text_field :end_date, :class => "datetimepicker" %>
   </div>
   <div class="field">
     <%= f.label :status %><br>
-    <%= f.number_field :status %>
+    <%= f.select :status, Task::STATUS.collect {|k,v| [k.capitalize,v]} %>
   </div>
   <div class="actions">
     <%= f.submit %>
   </div>
+<% end %>
+
+<% content_for :javascript_ready do %>
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
+<% end %>
+
+<% content_for :javascript_ready do %>
+  <%= javascript_include_tag 'jquery.datetimepicker' %>
+  
+  <script>
+  $(function() {
+    $('.datetimepicker').datetimepicker();
+  });
+  </script>
 <% end %>
