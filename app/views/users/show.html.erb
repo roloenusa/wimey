@@ -1,0 +1,36 @@
+<%= render 'tasks/calendar' %>
+
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Tasks </h3>
+  </div>
+  <div class="panel-body">
+    <table>
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Start date</th>
+          <th>End date</th>
+          <th>Status</th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @user.tasks.each do |task| %>
+          <tr>
+            <td><%= task.title %></td>
+            <td><%= task.start_date %></td>
+            <td><%= task.end_date %></td>
+            <td><%= task.status %></td>
+            <td><%= link_to 'Show', task %></td>
+            <td><%= link_to 'Edit', edit_task_path(task) %></td>
+            <td><%= link_to 'Destroy', task, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
