@@ -1,6 +1,7 @@
 class Task < ActiveRecord::Base
   
   belongs_to :user
+  belongs_to :project
   
   scope :before,    ->(end_time) { where ["end_date < ?", Task.format_date(end_time)] }
   scope :after,     ->(start_date) { where ["start_date > ?", Task.format_date(start_time)] }
@@ -16,6 +17,12 @@ class Task < ActiveRecord::Base
   }
   
   before_save :set_user_by_email
+  
+  attr_accessor :project_name
+  
+  def project_name
+    project ? project.name : nil
+  end
   
   def set_user_by_email
     self.user_id = User.find_by_email(self.user_email).id

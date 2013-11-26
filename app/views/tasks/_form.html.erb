@@ -16,6 +16,11 @@
     <%= f.autocomplete_field :user_email, autocomplete_user_email_tasks_path %>
   </div>
   <div class="field">
+    <%= f.label :project_name %><br>
+    <%= f.hidden_field :project_id, :id => "project_id"%>
+    <%= f.autocomplete_field :project_name, autocomplete_project_name_tasks_path, :id_element => '#project_id' %>
+  </div>
+  <div class="field">
     <%= f.label :title %><br>
     <%= f.text_field :title %>
   </div>

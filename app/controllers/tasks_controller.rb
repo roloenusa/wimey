@@ -1,5 +1,6 @@
 class TasksController < ApplicationController
   autocomplete :user, :email #, :scopes => [:scope1, :scope2]
+  autocomplete :project, :name #, :scopes => [:scope1, :scope2]
   
   before_filter :authenticate_user!
   before_action :set_task, only: [:show, :edit, :update, :destroy]
@@ -11,6 +12,7 @@ class TasksController < ApplicationController
     
     @user  = get_user(params[:user_id].to_i)
     @tasks = @user.tasks
+    @calendar_url = calendar_user_tasks_path(user_id: @user.id)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -76,8 +78,8 @@ class TasksController < ApplicationController
   # GET /tasks.json
   def calendar
     
-    @user  = params[:user_id].to_i == current_user.id ? current_user : User.find_by_id(params[:user_id].to_i)
-    @tasks = @user.tasks.active
+    @parent  = params[:user_id] ? User.find_by_id(params[:user_id].to_i) : Project.find_by_id(params[:project_id])
+    @tasks   = @parent.tasks.active
 
     respond_to do |format|
       format.html # index.html.erb
@@ -93,6 +95,6 @@ class TasksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def task_params
-      params.require(:task).permit(:created_by, :user_email, :title, :description, :start_date, :end_date, :status)
+      params.require(:task).permit(:created_by, :user_email, :title, :description, :start_date, :end_date, :status, :project_name, :project_id)
     end
 end

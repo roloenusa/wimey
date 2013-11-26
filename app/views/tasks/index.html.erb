@@ -1,13 +1,4 @@
-<div class="panel panel-primary">
-  <div class="panel-heading">
-    <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Calendar </h3>
-  </div>
-  <div class="panel-body">
-    <p>
-      <div id='calendar' class="<%= calendar_user_tasks_path(user_id: @user.id) %>"></div>
-    <p>
-  </div>
-</div>
+<%= render 'calendar' %>
 
 
 <h1>Listing tasks</h1>
@@ -50,13 +41,3 @@
 <br>
 
 <%= link_to 'New Task', new_task_path %>
-
-<% content_for :javascript_ready do %>
-  <%= javascript_include_tag 'fullcalendar/calendar' %>
-  <%= javascript_include_tag 'fullcalendar/fullcalendar' %>
-  <%= javascript_include_tag 'fullcalendar/gcal' %>
-<% end %>
-
-<% content_for :stylesheet_ready do %>
-  <%= stylesheet_link_tag :fullcalendar %>
-<% end %>
