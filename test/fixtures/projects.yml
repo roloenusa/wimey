@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  created_by: 1
+  title: MyString
+  description: 
+  status: 1
+
+two:
+  created_by: 1
+  title: MyString
+  description: 
+  status: 1
