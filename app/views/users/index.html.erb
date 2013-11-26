@@ -1,7 +1,9 @@
-Hello World
-
-User Signed in? <%= user_signed_in? %>
-
+<% if user_signed_in? %>
+<p>
+  Welcome <%= current_user.name %>
+</p>
+<% else %>
 <p>
   <%= link_to "Sign in with Google", user_omniauth_authorize_path(:google_oauth2) %>  
 </p>
+<% end %>
