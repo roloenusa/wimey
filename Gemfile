@@ -29,6 +29,7 @@ gem 'jbuilder', '~> 1.2'
 
 # Authentication
 gem 'omniauth-google-oauth2'
+gem 'google-api-client', :require => 'google/api_client'
 gem 'devise'
 
 # Autocomplete
