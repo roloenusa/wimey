@@ -13,13 +13,23 @@ class UsersController < ApplicationController
     
   end
   
+  def event
+    google_api_token = session[:google_api_token]
+    if google_api_token
+      calendar = GoogleCalendarApi.new(google_api_token)
+      calendar.new_event("roloenusa@gmail.com", Time.now, Time.now + 1.hour, ["jdelgado@quarkgames.com"], "This is a test")
+    end
+    
+    redirect_to user_path(current_user)
+  end
+  
   private
   
     def set_user
       user_id = params[:id].to_i
       if current_user && current_user.id == user_id
         @user = current_user 
-      else 
+      else
         @user = User.find_by_id(user_id)
       end
       return @user 

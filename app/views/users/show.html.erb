@@ -35,7 +35,6 @@
   </div>
 </div>
 
-<%= debug @auth %>
-<%= debug @result.data if @result %>
+<%= debug session[:hello] %>>
 
-<%= link_to "calendar", "https://www.googleapis.com/calendar/v3/users/me/calendarList" %>
+<%= link_to 'create_event', event_user_path(@user) %>
