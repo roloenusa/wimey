@@ -1,11 +1,13 @@
-<h1>Editing task</h1>
+<div class="row">
+  <div class="col-lg-12">
+    <%= render 'form' %>
 
-<%= render 'form' %>
+    <%= link_to 'Show', @task %> |
+    <%= link_to 'Back', tasks_path %>
 
-<%= link_to 'Show', @task %> |
-<%= link_to 'Back', tasks_path %>
-
-<% content_for :javascript_ready do %>
-  <%= javascript_include_tag "autocomplete-rails.js" %>
-<% end %>
+    <% content_for :javascript_ready do %>
+      <%= javascript_include_tag "autocomplete-rails.js" %>
+    <% end %>
+  </div>
+</div>
 

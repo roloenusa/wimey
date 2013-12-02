@@ -3,14 +3,14 @@ class TasksController < ApplicationController
   autocomplete :project, :name #, :scopes => [:scope1, :scope2]
   
   before_filter :authenticate_user!
-  before_action :set_task, only: [:show, :edit, :update, :destroy]
+  before_action :set_task, only: [:show, :edit, :update, :destroy, :google_event]
   skip_before_filter :verify_authenticity_token, :only => [:update]
 
   # GET /tasks
   # GET /tasks.json
   def index
     
-    @user  = get_user(params[:user_id].to_i)
+    @user  = get_user(params[:user_id])
     @tasks = @user.tasks
     @calendar_url = calendar_user_tasks_path(user_id: @user.id)
 
@@ -23,21 +23,24 @@ class TasksController < ApplicationController
   # GET /tasks/1
   # GET /tasks/1.json
   def show
+    @title = @task.title
   end
 
   # GET /tasks/new
   def new
+    @title = "Create Task"
     @task = Task.new
   end
 
   # GET /tasks/1/edit
   def edit
+    @title = "Editing Task"
   end
 
   # POST /tasks
   # POST /tasks.json
   def create
-    @task = Task.new(task_params.merge(created_by: current_user.id ))
+    @task = Task.new(task_params.merge(created_by: current_user.id))
 
     respond_to do |format|
       if @task.save
@@ -87,6 +90,16 @@ class TasksController < ApplicationController
     end
   end
   
+  def google_event
+    @task.schedule_event(params[:commit], current_user, session[:google_api])
+    @task.save
+
+    respond_to do |format|
+      format.html { redirect_to :back }
+      format.js  { render :json => @tasks.to_json }
+    end
+  end
+  
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_task
@@ -95,6 +108,6 @@ class TasksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def task_params
-      params.require(:task).permit(:created_by, :user_email, :title, :description, :start_date, :end_date, :status, :project_name, :project_id)
+      params.require(:task).permit(:created_by, :user_email, :title, :description, :start_date, :end_date, :status, :project_name, :project_id, :schedule_event)
     end
 end

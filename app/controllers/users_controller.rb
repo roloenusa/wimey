@@ -13,16 +13,6 @@ class UsersController < ApplicationController
     
   end
   
-  def event
-    google_api_token = session[:google_api_token]
-    if google_api_token
-      calendar = GoogleCalendarApi.new(google_api_token)
-      calendar.new_event("roloenusa@gmail.com", Time.now, Time.now + 1.hour, ["jdelgado@quarkgames.com"], "This is a test")
-    end
-    
-    redirect_to user_path(current_user)
-  end
-  
   private
   
     def set_user

@@ -1,4 +1,4 @@
-<%= form_for(@task) do |f| %>
+<%= form_for(@task, :html => {:class => "form-horizontal"}) do |f| %>
   <% if @task.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@task.errors.count, "error") %> prohibited this task from being saved:</h2>
@@ -10,43 +10,60 @@
       </ul>
     </div>
   <% end %>
-  
-  <div class="field">
-    <%= f.label :assigned_to %><br>
-    <%= f.autocomplete_field :user_email, autocomplete_user_email_tasks_path %>
+
+  <div class="form-group">
+    <%= f.label :assigned_to, :class => "col-sm-2 control-label" %>
+    <div class="col-sm-3">
+      <%= f.autocomplete_field :user_email, autocomplete_user_email_tasks_path, :class => 'form-control' %>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :project_name %><br>
-    <%= f.hidden_field :project_id, :id => "project_id"%>
-    <%= f.autocomplete_field :project_name, autocomplete_project_name_tasks_path, :id_element => '#project_id' %>
+  <div class="field form-group">
+    <%= f.label :project_name , :class => "col-sm-2 control-label" %>
+    <div class="col-sm-3">
+      <%= f.hidden_field :project_id, :id => "project_id"%>
+      <%= f.autocomplete_field :project_name, autocomplete_project_name_tasks_path, :id_element => '#project_id', :class => 'form-control' %>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :title %><br>
-    <%= f.text_field :title %>
+  <div class="field form-group">
+    <%= f.label :title, :class => "col-sm-2 control-label" %>
+    <div class="col-sm-3">
+      <%= f.text_field :title, :class => 'form-control' %>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :description %><br>
-    <%= f.text_area :description %>
+  <div class="field form-group">
+    <%= f.label :description, :class => "col-sm-2 control-label" %>
+    <div class="col-sm-3">
+      <%= f.text_area :description, :class => 'form-control' %>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :start_date %><br>
-    <%= f.text_field :start_date, :class => "datetimepicker" %>
+  <div class="field form-group">
+    <%= f.label :start_date, :class => "col-sm-2 control-label" %>
+    <div class="col-sm-3">
+      <%= f.text_field :start_date, :class => "datetimepicker form-control" %>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :end_date %><br>
-    <%= f.text_field :end_date, :class => "datetimepicker" %>
+  <div class="field form-group">
+    <%= f.label :end_date, :class => "col-sm-2 control-label" %>
+    <div class="col-sm-3">
+      <%= f.text_field :end_date, :class => "datetimepicker form-control" %>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :status %><br>
-    <%= f.select :status, Task::STATUS.collect {|k,v| [k.capitalize,v]} %>
+  <div class="field form-group">
+    <%= f.label :status, :class => "col-sm-2 control-label" %>
+    <div class="col-sm-3">
+      <%= f.select :status, Task::STATUS.collect {|k,v| [k.capitalize,v]}, :class => 'form-control' %>
+    </div>
   </div>
-  <div class="actions">
-    <%= f.submit %>
+  <div class="actions form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <%= f.submit :class => "btn btn-default" %>
+    </div>
   </div>
 <% end %>
 
-<% content_for :javascript_ready do %>
-  <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
+<% content_for :stylesheet_ready do %>
+  <%= stylesheet_link_tag "http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" %>
+  <%= stylesheet_link_tag "jquery.datetimepicker", media: "all", "data-turbolinks-track" => true %>
 <% end %>
 
 <% content_for :javascript_ready do %>
@@ -54,7 +71,9 @@
   
   <script>
   $(function() {
-    $('.datetimepicker').datetimepicker();
+    $('.datetimepicker').datetimepicker({
+      format:'Y-m-d H:m'
+    });
   });
   </script>
 <% end %>
