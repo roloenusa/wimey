@@ -3,14 +3,16 @@ class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy, :profile]
   
   def index
+    @title = "Users"
   end
   
   def show
+    @title = @user.name
     @calendar_url = calendar_user_tasks_path(user_id: @user.id)
   end
   
   def profile
-    
+    @title = @user.name
   end
   
   private

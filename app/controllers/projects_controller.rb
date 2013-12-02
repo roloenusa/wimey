@@ -5,22 +5,26 @@ class ProjectsController < ApplicationController
   # GET /projects
   # GET /projects.json
   def index
+    @title = "Projects"
     @projects = Project.all
   end
 
   # GET /projects/1
   # GET /projects/1.json
   def show
+    @title = @project.name
     @calendar_url = calendar_project_tasks_path(project_id: @project.id)
   end
 
   # GET /projects/new
   def new
+    @title = "Create Project"
     @project = Project.new
   end
 
   # GET /projects/1/edit
   def edit
+    @title = "Editing Project"
   end
 
   # POST /projects

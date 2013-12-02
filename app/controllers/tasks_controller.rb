@@ -4,15 +4,20 @@ class TasksController < ApplicationController
   
   before_filter :authenticate_user!
   before_action :set_task, only: [:show, :edit, :update, :destroy, :google_event]
+  before_action :set_parent, only: [:calendar, :index]
   skip_before_filter :verify_authenticity_token, :only => [:update]
-
+  
   # GET /tasks
   # GET /tasks.json
   def index
+    @title = "Tasks"
     
-    @user  = get_user(params[:user_id])
-    @tasks = @user.tasks
-    @calendar_url = calendar_user_tasks_path(user_id: @user.id)
+    if @parent
+      @tasks = @parent.tasks
+      @calendar_url = url_for([:calendar, @parent, :tasks])
+    else
+      @tasks = Task.active
+    end
 
     respond_to do |format|
       format.html # index.html.erb
@@ -80,8 +85,6 @@ class TasksController < ApplicationController
   # GET /tasks
   # GET /tasks.json
   def calendar
-    
-    @parent  = params[:user_id] ? User.find_by_id(params[:user_id].to_i) : Project.find_by_id(params[:project_id])
     @tasks   = @parent.tasks.active
 
     respond_to do |format|
@@ -104,6 +107,14 @@ class TasksController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_task
       @task = Task.find(params[:id])
+    end
+    
+    def set_parent
+      if params[:project_id]
+        @parent = Project.find(params[:project_id])
+      elsif params[:user_id]
+        @parent = User.find(params[:user_id])
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
