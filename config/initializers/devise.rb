@@ -5,7 +5,7 @@ require "omniauth-google-oauth2"
 Devise.setup do |config|
   
   config.omniauth :google_oauth2, ENV["GOOGLE_CLIENT_ID"], ENV["GOOGLE_SECRET"], { 
-    access_type: "offline", prompt: 'select_account', approval_prompt: "", image_aspect_ratio: 'square',
+    access_type: "offline", prompt: 'consent', approval_prompt: "", image_aspect_ratio: 'square',
     :scope => "userinfo.email, userinfo.profile, https://www.googleapis.com/auth/calendar"
   }
   

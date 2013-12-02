@@ -17,6 +17,7 @@ Wimey::Application.routes.draw do
   end
   
   resources :tasks do
+    get :google_event, :on => :member
     get :autocomplete_user_email, :on => :collection
     get :autocomplete_project_name, :on => :collection
   end
@@ -24,7 +25,6 @@ Wimey::Application.routes.draw do
   resources :users do 
     member do
       get 'profile'
-      get 'event'
     end
     
     resources :tasks do
