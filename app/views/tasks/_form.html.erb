@@ -14,14 +14,18 @@
   <div class="form-group">
     <%= f.label :assigned_to, :class => "col-sm-2 control-label" %>
     <div class="col-sm-3">
-      <%= f.autocomplete_field :user_email, autocomplete_user_email_tasks_path, :class => 'form-control' %>
+      <%= f.hidden_field :user_id, :id => "user_id"%>
+      <%= f.autocomplete_field :user_email, autocomplete_user_email_tasks_path, :id_element => '#user_id', 
+                                                                                :class => 'form-control', 
+                                                                                :value => @task.user_email || current_user.email %>
     </div>
   </div>
   <div class="field form-group">
     <%= f.label :project_name , :class => "col-sm-2 control-label" %>
     <div class="col-sm-3">
       <%= f.hidden_field :project_id, :id => "project_id"%>
-      <%= f.autocomplete_field :project_name, autocomplete_project_name_tasks_path, :id_element => '#project_id', :class => 'form-control' %>
+      <%= f.autocomplete_field :project_name, autocomplete_project_name_tasks_path, :id_element => '#project_id', 
+                                                                                    :class => 'form-control' %>
     </div>
   </div>
   <div class="field form-group">
@@ -67,6 +71,7 @@
 <% end %>
 
 <% content_for :javascript_ready do %>
+  <%= javascript_include_tag 'autocomplete-rails' %>
   <%= javascript_include_tag 'jquery.datetimepicker' %>
   
   <script>

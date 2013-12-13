@@ -1,11 +1,14 @@
 <ul class="nav navbar-nav side-nav">
+  
+  <% if current_user %>
   <li class="active"><%= link_to user_path(current_user) do %><i class="fa fa-dashboard"></i> Dashboard<% end %></li>
   <li><%= link_to projects_path do %><i class="fa fa-bar-chart-o"></i> Projects<% end %></li>
   <li class="dropdown">
     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-caret-square-o-down"></i> Tasks <b class="caret"></b></a>
     <ul class="dropdown-menu">
-      <li><%= link_to tasks_path do %>All<% end %></li>
       <li><%= link_to user_tasks_path(user_id: current_user) do %>Mine<% end %></li>
     </ul>
   </li>
+  <% end %>
+  
 </ul>

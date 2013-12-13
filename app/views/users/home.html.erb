@@ -1,0 +1,48 @@
+<div class="row">
+  <div class="col-lg-3"></div>
+  <div class="col-lg-6">
+    <h1>Welcome to Wimey!</h1>
+  </div>
+  <div class="col-lg-3"></div>
+</div>
+
+<div class="row"></div>
+
+<div class="row">
+  
+  <div class="col-lg-6">
+    <blockquote>
+      This is Wimey. A task and timeline manager for simple projects, 
+      tasks, and any other activity that you want to keep scheduled and organized!
+    </blockquote>
+  </div>
+  
+  
+  <div class="col-lg-6">
+    <div class="panel panel-info">
+      <div class="panel-heading">
+        <div class="row">
+          <div class="col-xs-6">
+            <i class="fa fa-comments fa-5x"></i>
+          </div>
+          <div class="col-xs-6 text-right">
+            <p class="announcement-heading">Sign in!</p>
+            <p class="announcement-text">using your google account</p>
+          </div>
+        </div>
+      </div>
+      <a href="#">
+        <div class="panel-footer announcement-bottom">
+          <div class="row">
+            <div class="col-xs-6">
+              <%= link_to "Sign-in", user_omniauth_authorize_path(:google_oauth2) %>
+            </div>
+            <div class="col-xs-6 text-right">
+              <i class="fa fa-arrow-circle-right"></i>
+            </div>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+</div><!-- /.row -->
