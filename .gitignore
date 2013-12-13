@@ -17,3 +17,5 @@
 /config/app_environment_variables.rb
 /*.DS_Store
 *.DS_Store
+
+/config/database.yml
