@@ -15,15 +15,15 @@ class UsersController < ApplicationController
     @title = @user.name
   end
   
-  private
+private
   
-    def set_user
-      user_id = params[:id].to_i
-      if current_user && current_user.id == user_id
-        @user = current_user 
-      else
-        @user = User.find_by_id(user_id)
-      end
-      return @user 
+  def set_user
+    user_id = params[:id].to_i
+    if current_user && current_user.id == user_id
+      @user = current_user 
+    else
+      @user = User.find_by_id(user_id)
     end
+    return @user 
+  end
 end

@@ -4,10 +4,6 @@
 
     <%= link_to 'Show', @task %> |
     <%= link_to 'Back', tasks_path %>
-
-    <% content_for :javascript_ready do %>
-      <%= javascript_include_tag "autocomplete-rails.js" %>
-    <% end %>
   </div>
 </div>
 
